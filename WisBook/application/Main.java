@@ -863,7 +863,9 @@ public class Main extends Application {
                     else {
                     	List<String> PersonSet = null;
                         try {
+                        	System.out.println(sw.g.adjList);
                         PersonSet=sw.getShortestPath(person1, person2, g);
+                        
 
 
                         }catch (Exception exx) {

@@ -154,7 +154,56 @@ public class SocialNetwork implements SocialNetworkADT {
 		}
 		return result;
 	}
+int res1=0;
+//get the number of vertices of a given node
+	private	void DFSUtil1(int v, List<Vis>b,Graph g1) { 
+        // Mark the current node as visited and print it 
+       b.get(v).visited=true;
+      res1++;
+//        System.out.print(v+" "); 
+        // Recur for all the vertices 
+        // adjacent to this vertex 
+        for (Person x : g1.getAdjacentVerticesOf(b.get(v).p1)) { 
+        	int idx=-1;
+        	
+        	for(int i =0;i<b.size();i++) {
+        		if((b.get(i).p1).compareTo(x)==1)idx=i;
+        	}
+        	if(idx!=-1)
+            if(!b.get(idx).visited) DFSUtil1(idx,b,g1); 
+        } 
+        
+  
+    } 
 
+  private  int connectedComponents1(Graph g1,Person person) { 
+        // Mark all the vertices as not visited 
+
+    	// setting up the visited array for dfs
+    	List<Vis> b = new ArrayList<Vis>(g1.order());
+    	for(Person i : g1.getAllVertices()) {
+    		b.add(new Vis(i));
+ 
+    	}
+    	
+    	int res=0;
+    	int idx=0;
+     for(int i =0;i<g1.order();i++) {
+    	 if(b.get(i).p1.getName().equals(person.getName())) {
+    		idx=i;
+    	 }}
+     
+     for(int i =0;i<g1.order();i++) {
+            if(!(b.get(idx).visited)) { 
+                // print all reachable vertices 
+                // from v 
+            	
+                DFSUtil1(i,b,g1); 
+               
+            } 
+            }
+         return res1;
+    } 
 
 	@Override
 	public List<String> getShortestPath(Person f1, Person f2,Graph g1) {
@@ -187,7 +236,12 @@ public class SocialNetwork implements SocialNetworkADT {
         	}
         }
         // Calculate the single source shortest path 
-        DPQ dpq = new DPQ(V); 
+        res1 = 0;
+        int numv = connectedComponents1(g1,f1);
+        System.out.println(g1.order);
+        System.out.println(g1.size);
+        System.out.println(numv + f1.name);
+        DPQ dpq = new DPQ(numv); 
         dpq.dijkstra(adj, src); 
         
         //right now we have the distance map
@@ -383,24 +437,28 @@ private	void DFSUtil(int v, List<Vis>b,Graph g1) {
 	
 	public static void main(String[] args) throws IOException  {
 		SocialNetwork sw = new SocialNetwork();
-		File file = new File("/Users/apple/Desktop/wisbook/WisBook/train.txt");
-		sw.loadFromFile(file);
-		System.out.println(sw.g.order);
-		System.out.println(sw.g.size);
-//		System.out.println(sw.CenterUser.name);
-		Set<Person> all = sw.g.getAllVertices();
-		Person p1 = new Person("xxx");
-		Person p2 = new Person("xxxx");
-		for(Person p: all) {
-			if(p.name.equals("deb")) {
-				p1=p;
-			}
-			if(p.name.equals("yunjia")) {
-				p2=p;
-			}
-		}
-//		System.out.println(p1.name);
-//		System.out.println(p2.name);
+//		File file = new File("/Users/apple/Desktop/wisbook/WisBook/train.txt");
+//		sw.loadFromFile(file);
+//		System.out.println(sw.g.order);
+//		System.out.println(sw.g.size);
+////		System.out.println(sw.CenterUser.name);
+//		Set<Person> all = sw.g.getAllVertices();
+//		Person p1 = new Person("xxx");
+//		Person p2 = new Person("xxxx");
+//		for(Person p: all) {
+//			if(p.name.equals("deb")) {
+//				p1=p;
+//			}
+//			if(p.name.equals("yunjia")) {
+//				p2=p;
+//			}
+//		}
+////		System.out.println(p1.name);
+////		System.out.println(p2.name);
+//		System.out.println(sw.getShortestPath(p1, p2, sw.g));
+		Person p1 = new Person("p1");
+		Person p2 = new Person("p2");
+		sw.addFriends(p1,p2);
 		System.out.println(sw.getShortestPath(p1, p2, sw.g));
 		
 		

@@ -40,15 +40,18 @@ import java.util.Set;
 	        // Add source node to the priority queue 
 	        Node srcc = new Node(src, 0);
 	        pq.add(srcc); 
+	        
 	  
 	        // Distance to the source is 0 
 	        dist.replace(src, 0); 
 	        //parent of src is src
 	        parent.replace(src, src);
-	        while (settled.size() != 8) { 
+	        System.out.println("V   " + V);
+	        while (settled.size() != V) { 
 	  
 	            // remove the minimum distance node  
 	            // from the priority queue  
+	        	System.out.println("srcc xxx" + pq.size());
 	        	
 	            Node u = pq.remove(); 
 	            // adding the node whose distance is 
